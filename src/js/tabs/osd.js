@@ -283,6 +283,7 @@ OSD.initData = function() {
     OSD.data = {
         video_system: null,
         unit_mode: null,
+        dji_mode: 0,
         alarms: [],
         statItems: [],
         warnings: [],
@@ -523,6 +524,7 @@ OSD.loadDisplayFields = function() {
             draw_order: 20,
             positionable: true,
             preview: `${FONT.symbol(SYM.BATTERY)}16.8${FONT.symbol(SYM.VOLT)}`,
+            dji: true,
         },
         RSSI_VALUE: {
             name: 'RSSI_VALUE',
@@ -532,6 +534,7 @@ OSD.loadDisplayFields = function() {
             draw_order: 30,
             positionable: true,
             preview: `${FONT.symbol(SYM.RSSI)}99`,
+            dji: true,
         },
         TIMER: {
             name: 'TIMER',
@@ -540,6 +543,7 @@ OSD.loadDisplayFields = function() {
             defaultPosition: -39,
             positionable: true,
             preview: `${FONT.symbol(SYM.ON_M)} 11:11`,
+            dji: false,
         },
         THROTTLE_POSITION: {
             name: 'THROTTLE_POSITION',
@@ -549,6 +553,7 @@ OSD.loadDisplayFields = function() {
             draw_order: 110,
             positionable: true,
             preview: `${FONT.symbol(SYM.THR)} 69`,
+            dji: false,
         },
         CPU_LOAD: {
             name: 'CPU_LOAD',
@@ -557,6 +562,7 @@ OSD.loadDisplayFields = function() {
             defaultPosition: 26,
             positionable: true,
             preview: '15',
+            dji: false,
         },
         VTX_CHANNEL: {
             name: 'VTX_CHANNEL',
@@ -566,6 +572,7 @@ OSD.loadDisplayFields = function() {
             draw_order: 120,
             positionable: true,
             preview: 'R:2:200:P',
+            dji: false,
         },
         VOLTAGE_WARNING: {
             name: 'VOLTAGE_WARNING',
@@ -574,6 +581,7 @@ OSD.loadDisplayFields = function() {
             defaultPosition: -80,
             positionable: true,
             preview: 'LOW VOLTAGE',
+            dji: false,
         },
         ARMED: {
             name: 'ARMED',
@@ -582,6 +590,7 @@ OSD.loadDisplayFields = function() {
             defaultPosition: -107,
             positionable: true,
             preview: 'ARMED',
+            dji: false,
         },
         DISARMED: {
             name: 'DISARMED',
@@ -591,6 +600,7 @@ OSD.loadDisplayFields = function() {
             draw_order: 280,
             positionable: true,
             preview: 'DISARMED',
+            dji: true,
         },
         CROSSHAIRS: {
             name: 'CROSSHAIRS',
@@ -610,6 +620,7 @@ OSD.loadDisplayFields = function() {
             preview() {
                 return FONT.symbol(SYM.AH_CENTER_LINE) + FONT.symbol(SYM.AH_CENTER) + FONT.symbol(SYM.AH_CENTER_LINE_RIGHT);
             },
+            dji: true,
         },
         ARTIFICIAL_HORIZON: {
             name: 'ARTIFICIAL_HORIZON',
@@ -647,6 +658,7 @@ OSD.loadDisplayFields = function() {
                 }
                 return artificialHorizon;
             },
+            dji: false,
         },
         HORIZON_SIDEBARS: {
             name: 'HORIZON_SIDEBARS',
@@ -698,6 +710,7 @@ OSD.loadDisplayFields = function() {
 
                 return horizonSidebar;
             },
+            dji: true,
         },
         CURRENT_DRAW: {
             name: 'CURRENT_DRAW',
@@ -709,6 +722,7 @@ OSD.loadDisplayFields = function() {
             preview() {
                 return semver.gte(FC.CONFIG.apiVersion, API_VERSION_1_36) ? ` 42.00${FONT.symbol(SYM.AMP)}` : `${FONT.symbol(SYM.AMP)}42.0`;
             },
+            dji: true,
         },
         MAH_DRAWN: {
             name: 'MAH_DRAWN',
@@ -720,6 +734,7 @@ OSD.loadDisplayFields = function() {
             preview() {
                 return semver.gte(FC.CONFIG.apiVersion, API_VERSION_1_36) ? ` 690${FONT.symbol(SYM.MAH)}` : `${FONT.symbol(SYM.MAH)}690`;
             },
+            dji: true,
         },
         CRAFT_NAME: {
             name: 'CRAFT_NAME',
@@ -729,6 +744,7 @@ OSD.loadDisplayFields = function() {
             draw_order: 150,
             positionable: true,
             preview: OSD.generateCraftName,
+            dji: true,
         },
         ALTITUDE: {
             name: 'ALTITUDE',
@@ -744,6 +760,7 @@ OSD.loadDisplayFields = function() {
             preview(osdData) {
                 return OSD.generateAltitudePreview(osdData);
             },
+            dji: true,
         },
         ONTIME: {
             name: 'ONTIME',
@@ -752,6 +769,7 @@ OSD.loadDisplayFields = function() {
             defaultPosition: -1,
             positionable: true,
             preview: `${FONT.symbol(SYM.ON_M)}05:42`,
+            dji: false,
         },
         FLYTIME: {
             name: 'FLYTIME',
@@ -760,6 +778,7 @@ OSD.loadDisplayFields = function() {
             defaultPosition: -1,
             positionable: true,
             preview: `${FONT.symbol(SYM.FLY_M)}04:11`,
+            dji: false,
         },
         FLYMODE: {
             name: 'FLYMODE',
@@ -769,6 +788,7 @@ OSD.loadDisplayFields = function() {
             draw_order: 90,
             positionable: true,
             preview: 'ANGL',
+            dji: true,
         },
         GPS_SPEED: {
             name: 'GPS_SPEED',
@@ -782,6 +802,7 @@ OSD.loadDisplayFields = function() {
                 const unit = FONT.symbol(osdData.unit_mode === UNIT_METRIC ? SYM.KPH : SYM.MPH);
                 return `${FONT.symbol(SYM.SPEED)}40${unit}`;
             },
+            dji: true,
         },
         GPS_SATS: {
             name: 'GPS_SATS',
@@ -791,6 +812,7 @@ OSD.loadDisplayFields = function() {
             draw_order: 800,
             positionable: true,
             preview: `${FONT.symbol(SYM.GPS_SAT_L)}${FONT.symbol(SYM.GPS_SAT_R)}14`,
+            dji: true,
         },
         GPS_LON: {
             name: 'GPS_LON',
@@ -808,6 +830,7 @@ OSD.loadDisplayFields = function() {
             preview(osdData) {
                 return OSD.generateGpsLatLongPreview(osdData, 'GPS_LON');
             },
+            dji: true,
         },
         GPS_LAT: {
             name: 'GPS_LAT',
@@ -825,6 +848,7 @@ OSD.loadDisplayFields = function() {
             preview(osdData) {
                 return OSD.generateGpsLatLongPreview(osdData, 'GPS_LAT');
             },
+            dji: true,
         },
         DEBUG: {
             name: 'DEBUG',
@@ -834,6 +858,7 @@ OSD.loadDisplayFields = function() {
             draw_order: 240,
             positionable: true,
             preview: 'DBG     0     0     0     0',
+            dji: false,
         },
         PID_ROLL: {
             name: 'PID_ROLL',
@@ -843,6 +868,7 @@ OSD.loadDisplayFields = function() {
             draw_order: 170,
             positionable: true,
             preview: `ROL ${OSD.formatPidsPreview(0)}`,
+            dji: true,
         },
         PID_PITCH: {
             name: 'PID_PITCH',
@@ -852,6 +878,7 @@ OSD.loadDisplayFields = function() {
             draw_order: 180,
             positionable: true,
             preview: `PIT ${OSD.formatPidsPreview(1)}`,
+            dji: true,
         },
         PID_YAW: {
             name: 'PID_YAW',
@@ -861,6 +888,7 @@ OSD.loadDisplayFields = function() {
             draw_order: 190,
             positionable: true,
             preview: `YAW ${OSD.formatPidsPreview(2)}`,
+            dji: true,
         },
         POWER: {
             name: 'POWER',
@@ -872,6 +900,7 @@ OSD.loadDisplayFields = function() {
             preview() {
                 return semver.gte(FC.CONFIG.apiVersion, API_VERSION_1_36) ? ' 142W' : '142W';
             },
+            dji: true,
         },
         PID_RATE_PROFILE: {
             name: 'PID_RATE_PROFILE',
@@ -881,6 +910,7 @@ OSD.loadDisplayFields = function() {
             draw_order: 210,
             positionable: true,
             preview: '1-2',
+            dji: true,
         },
         BATTERY_WARNING: {
             name: 'BATTERY_WARNING',
@@ -889,6 +919,7 @@ OSD.loadDisplayFields = function() {
             defaultPosition: -1,
             positionable: true,
             preview: 'LOW VOLTAGE',
+            dji: false,
         },
         AVG_CELL_VOLTAGE: {
             name: 'AVG_CELL_VOLTAGE',
@@ -898,6 +929,7 @@ OSD.loadDisplayFields = function() {
             draw_order: 230,
             positionable: true,
             preview: `${FONT.symbol(SYM.BATTERY)}3.98${FONT.symbol(SYM.VOLT)}`,
+            dji: true,
         },
         PITCH_ANGLE: {
             name: 'PITCH_ANGLE',
@@ -907,6 +939,7 @@ OSD.loadDisplayFields = function() {
             draw_order: 250,
             positionable: true,
             preview: `${FONT.symbol(SYM.PITCH)}-00.0`,
+            dji: true,
         },
         ROLL_ANGLE: {
             name: 'ROLL_ANGLE',
@@ -916,6 +949,7 @@ OSD.loadDisplayFields = function() {
             draw_order: 260,
             positionable: true,
             preview: `${FONT.symbol(SYM.ROLL)}-00.0`,
+            dji: true,
         },
         MAIN_BATT_USAGE: {
             name: 'MAIN_BATT_USAGE',
@@ -933,6 +967,7 @@ OSD.loadDisplayFields = function() {
             preview(osdData) {
                 return OSD.generateBatteryUsagePreview(osdData);
             },
+            dji: true,
         },
         ARMED_TIME: {
             name: 'ARMED_TIME',
@@ -941,6 +976,7 @@ OSD.loadDisplayFields = function() {
             defaultPosition: -1,
             positionable: true,
             preview: `${FONT.symbol(SYM.FLY_M)}02:07`,
+            dji: false,
         },
         HOME_DIR: {
             name: 'HOME_DIRECTION',
@@ -950,6 +986,7 @@ OSD.loadDisplayFields = function() {
             draw_order: 850,
             positionable: true,
             preview: FONT.symbol(SYM.ARROW_SOUTH + 2),
+            dji: true,
         },
         HOME_DIST: {
             name: 'HOME_DISTANCE',
@@ -962,6 +999,7 @@ OSD.loadDisplayFields = function() {
                 const unit = FONT.symbol(osdData.unit_mode === 0 ? SYM.FEET : SYM.METRE);
                 return `${FONT.symbol(SYM.HOMEFLAG)}432${unit}`;
             },
+            dji: true,
         },
         NUMERICAL_HEADING: {
             name: 'NUMERICAL_HEADING',
@@ -971,6 +1009,7 @@ OSD.loadDisplayFields = function() {
             draw_order: 290,
             positionable: true,
             preview: `${FONT.symbol(SYM.ARROW_EAST)}90`,
+            dji: false,
         },
         NUMERICAL_VARIO: {
             name: 'NUMERICAL_VARIO',
@@ -983,6 +1022,7 @@ OSD.loadDisplayFields = function() {
                 const unit = FONT.symbol(osdData.unit_mode === 0 ? SYM.FTPS : SYM.MPS);
                 return `${FONT.symbol(SYM.ARROW_SMALL_UP)}8.7${unit}`;
             },
+            dji: true,
         },
         COMPASS_BAR: {
             name: 'COMPASS_BAR',
@@ -996,6 +1036,7 @@ OSD.loadDisplayFields = function() {
                     FONT.symbol(SYM.HEADING_LINE) + FONT.symbol(SYM.HEADING_N) + FONT.symbol(SYM.HEADING_LINE) +
                     FONT.symbol(SYM.HEADING_DIVIDED_LINE) + FONT.symbol(SYM.HEADING_LINE) + FONT.symbol(SYM.HEADING_E);
             },
+            dji: false,
         },
         WARNINGS: {
             name: 'WARNINGS',
@@ -1005,6 +1046,7 @@ OSD.loadDisplayFields = function() {
             draw_order: 220,
             positionable: true,
             preview: 'LOW VOLTAGE',
+            dji: true,
         },
         ESC_TEMPERATURE: {
             name: 'ESC_TEMPERATURE',
@@ -1016,6 +1058,7 @@ OSD.loadDisplayFields = function() {
             preview(osdData) {
                 return `E${OSD.generateTemperaturePreview(osdData, 45)}`;
             },
+            dji: true,
         },
         ESC_RPM: {
             name: 'ESC_RPM',
@@ -1025,6 +1068,7 @@ OSD.loadDisplayFields = function() {
             draw_order: 1000,
             positionable: true,
             preview: [ "22600", "22600", "22600", "22600"],
+            dji: false,
         },
         REMAINING_TIME_ESTIMATE: {
             name: 'REMAINING_TIME_ESTIMATE',
@@ -1034,6 +1078,7 @@ OSD.loadDisplayFields = function() {
             draw_order: 80,
             positionable: true,
             preview: '01:13',
+            dji: false,
         },
         RTC_DATE_TIME: {
             name: 'RTC_DATE_TIME',
@@ -1043,6 +1088,7 @@ OSD.loadDisplayFields = function() {
             draw_order: 360,
             positionable: true,
             preview: '2017-11-11 16:20:00',
+            dji: true,
         },
         ADJUSTMENT_RANGE: {
             name: 'ADJUSTMENT_RANGE',
@@ -1052,6 +1098,7 @@ OSD.loadDisplayFields = function() {
             draw_order: 370,
             positionable: true,
             preview: 'PITCH/ROLL P: 42',
+            dji: false,
         },
         TIMER_1: {
             name: 'TIMER_1',
@@ -1063,6 +1110,7 @@ OSD.loadDisplayFields = function() {
             preview(osdData) {
                 return OSD.generateTimerPreview(osdData, 0);
             },
+            dji: false,
         },
         TIMER_2: {
             name: 'TIMER_2',
@@ -1074,6 +1122,7 @@ OSD.loadDisplayFields = function() {
             preview(osdData) {
                 return OSD.generateTimerPreview(osdData, 1);
             },
+            dji: false,
         },
         CORE_TEMPERATURE: {
             name: 'CORE_TEMPERATURE',
@@ -1085,6 +1134,7 @@ OSD.loadDisplayFields = function() {
             preview(osdData) {
                 return `C${OSD.generateTemperaturePreview(osdData, 33)}`;
             },
+            dji: false,
         },
         ANTI_GRAVITY: {
             name: 'ANTI_GRAVITY',
@@ -1094,6 +1144,7 @@ OSD.loadDisplayFields = function() {
             draw_order: 320,
             positionable: true,
             preview: 'AG',
+            dji: false,
         },
         G_FORCE: {
             name: 'G_FORCE',
@@ -1103,6 +1154,7 @@ OSD.loadDisplayFields = function() {
             draw_order: 15,
             positionable: true,
             preview: '1.0G',
+            dji: false,
         },
         MOTOR_DIAG: {
             name: 'MOTOR_DIAGNOSTICS',
@@ -1115,6 +1167,7 @@ OSD.loadDisplayFields = function() {
                 + FONT.symbol(0x85)
                 + FONT.symbol(0x84)
                 + FONT.symbol(0x83),
+            dji: false,
         },
         LOG_STATUS: {
             name: 'LOG_STATUS',
@@ -1124,6 +1177,7 @@ OSD.loadDisplayFields = function() {
             draw_order: 330,
             positionable: true,
             preview: `${FONT.symbol(SYM.BBLOG)}16`,
+            dji: false,
         },
         FLIP_ARROW: {
             name: 'FLIP_ARROW',
@@ -1133,6 +1187,7 @@ OSD.loadDisplayFields = function() {
             draw_order: 340,
             positionable: true,
             preview: FONT.symbol(SYM.ARROW_EAST),
+            dji: false,
         },
         LINK_QUALITY: {
             name: 'LINK_QUALITY',
@@ -1142,6 +1197,7 @@ OSD.loadDisplayFields = function() {
             draw_order: 390,
             positionable: true,
             preview: OSD.generateLQPreview,
+            dji: true,
         },
         FLIGHT_DIST: {
             name: 'FLIGHT_DISTANCE',
@@ -1154,6 +1210,7 @@ OSD.loadDisplayFields = function() {
                 const unit = FONT.symbol(osdData.unit_mode === 0 ? SYM.FEET : SYM.METRE);
                 return `${FONT.symbol(SYM.TOTAL_DIST)}653${unit}`;
             },
+            dji: false,
         },
         STICK_OVERLAY_LEFT: {
             name: 'STICK_OVERLAY_LEFT',
@@ -1163,6 +1220,7 @@ OSD.loadDisplayFields = function() {
             draw_order: 400,
             positionable: true,
             preview: OSD.drawStickOverlayPreview,
+            dji: false,
         },
         STICK_OVERLAY_RIGHT: {
             name: 'STICK_OVERLAY_RIGHT',
@@ -1172,6 +1230,7 @@ OSD.loadDisplayFields = function() {
             draw_order: 410,
             positionable: true,
             preview: OSD.drawStickOverlayPreview,
+            dji: false,
         },
         DISPLAY_NAME: {
             name: 'DISPLAY_NAME',
@@ -1183,6 +1242,7 @@ OSD.loadDisplayFields = function() {
             preview(osdData) {
                 return OSD.generateDisplayName(osdData, 1);
             },
+            dji: false,
         },
         ESC_RPM_FREQ: {
             name: 'ESC_RPM_FREQ',
@@ -1192,6 +1252,7 @@ OSD.loadDisplayFields = function() {
             draw_order: 1010,
             positionable: true,
             preview: [ "22600", "22600", "22600", "22600"],
+            dji: false,
         },
         RATE_PROFILE_NAME: {
             name: 'RATE_PROFILE_NAME',
@@ -1201,6 +1262,7 @@ OSD.loadDisplayFields = function() {
             draw_order: 420,
             positionable: true,
             preview: 'RATE_1',
+            dji: false,
         },
         PID_PROFILE_NAME: {
             name: 'PID_PROFILE_NAME',
@@ -1210,6 +1272,7 @@ OSD.loadDisplayFields = function() {
             draw_order: 430,
             positionable: true,
             preview: 'PID_1',
+            dji: false,
         },
         OSD_PROFILE_NAME: {
             name: 'OSD_PROFILE_NAME',
@@ -1219,6 +1282,7 @@ OSD.loadDisplayFields = function() {
             draw_order: 440,
             positionable: true,
             preview: 'OSD_1',
+            dji: false,
         },
         RSSI_DBM_VALUE: {
             name: 'RSSI_DBM_VALUE',
@@ -1228,6 +1292,7 @@ OSD.loadDisplayFields = function() {
             draw_order: 395,
             positionable: true,
             preview: `${FONT.symbol(SYM.RSSI)}-130`,
+            dji: false,
         },
         RC_CHANNELS: {
             name: 'OSD_RC_CHANNELS',
@@ -1237,6 +1302,7 @@ OSD.loadDisplayFields = function() {
             draw_order: 445,
             positionable: true,
             preview: [ "-1000", "  545", "  689", " 1000"],
+            dji: false,
         },
         CAMERA_FRAME: {
             name: 'OSD_CAMERA_FRAME',
@@ -1246,6 +1312,7 @@ OSD.loadDisplayFields = function() {
             draw_order: 450,
             positionable: true,
             preview: OSD.drawCameraFramePreview,
+            dji: false,
         },
         OSD_EFFICIENCY: {
             name: 'OSD_EFFICIENCY',
@@ -1258,6 +1325,7 @@ OSD.loadDisplayFields = function() {
                 const unit = FONT.symbol(osdData.unit_mode === 0 ? SYM.MILES : SYM.KM);
                 return `1234${FONT.symbol(SYM.MAH)}/${unit}`;
             },
+            dji: false,
         },
         TOTAL_FLIGHTS: {
             name: 'OSD_TOTAL_FLIGHTS',
@@ -1267,6 +1335,7 @@ OSD.loadDisplayFields = function() {
             draw_order: 460,
             positionable: true,
             preview: "#9876",
+            dji: false,
         },
         OSD_UP_DOWN_REFERENCE: {
             name: 'OSD_UP_DOWN_REFERENCE',
@@ -1276,6 +1345,7 @@ OSD.loadDisplayFields = function() {
             draw_order: 465,
             positionable: true,
             preview: 'U',
+            dji: false,
         },
         OSD_TX_UPLINK_POWER: {
             name: 'OSD_TX_UPLINK_POWER',
@@ -1285,6 +1355,7 @@ OSD.loadDisplayFields = function() {
             draw_order: 470,
             positionable: true,
             preview: `${FONT.symbol(SYM.RSSI)}250MW`,
+            dji: false,
         },
     };
 };
@@ -1305,6 +1376,10 @@ OSD.constants = {
         PAL: 480,
         NTSC: 390,
     },
+    DJI_OSD: [
+        "ALL",
+        "ONLY",
+    ],
     UNIT_TYPES: [
         'IMPERIAL',
         'METRIC',
@@ -2063,6 +2138,7 @@ OSD.msp = {
                 preview: suffix ? c.preview + suffix : c.preview,
                 variants: c.variants,
                 ignoreSize,
+                dji: c.dji,
             }, this.helpers.unpack.position(item, c)));
         }
 
@@ -2265,6 +2341,7 @@ OSD.msp = {
                         desc: c.desc,
                         index: i,
                         enabled: v === 1,
+                        dji: c.dji,
                     });
 
                 // Read all the data for any statistics we don't know about
@@ -2276,6 +2353,7 @@ OSD.msp = {
                         desc: 'osdDescStatUnknown',
                         index: i,
                         enabled: v === 1,
+                        dji: true,
                     });
                 }
             }
@@ -2499,6 +2577,7 @@ TABS.osd.initialize = function(callback) {
         $('.elements-container div.cf_tip').attr('title', i18n.getMessage('osdSectionHelpElements'));
         $('.videomode-container div.cf_tip').attr('title', i18n.getMessage('osdSectionHelpVideoMode'));
         $('.units-container div.cf_tip').attr('title', i18n.getMessage('osdSectionHelpUnits'));
+        $('.dji-container div.cf_tip').attr('title', i18n.getMessage('osdSectionHelpDJI'));
         $('.timers-container div.cf_tip').attr('title', i18n.getMessage('osdSectionHelpTimers'));
         $('.alarms-container div.cf_tip').attr('title', i18n.getMessage('osdSectionHelpAlarms'));
         $('.stats-container div.cf_tip').attr('title', i18n.getMessage('osdSectionHelpStats'));
@@ -2575,6 +2654,29 @@ TABS.osd.initialize = function(callback) {
                     }
                     $videoTypes.find(':radio').click(function() {
                         OSD.data.video_system = $(this).data('type');
+                        MSP.promise(MSPCodes.MSP_SET_OSD_CONFIG, OSD.msp.encodeOther())
+                            .then(function() {
+                                updateOsdView();
+                            });
+                    });
+
+                    // dji
+                    $('.dji-container').show();
+                    const $djiMode = $('.dji').empty();
+                    for (let i = 0; i < OSD.constants.DJI_OSD.length; i++) {
+                        const type = OSD.constants.DJI_OSD[i];
+                        const djiOptionText = i18n.getMessage(`osdSetupDJIOption${inflection.camelize(type.toLowerCase())}`);
+                        const $checkbox = $('<label/>')
+                            .append($(`<input name="dji_mode" type="radio"/>${djiOptionText}</label>`)
+                            .prop('checked', i === OSD.data.dji_mode)
+                            .data('type', type)
+                            .data('type', i),
+                        );
+                        $djiMode.append($checkbox);
+                    }
+                    $djiMode.find(':radio').click(function() {
+                        console.log("find", OSD.data);
+                        OSD.data.dji_mode = $(this).data('type');
                         MSP.promise(MSPCodes.MSP_SET_OSD_CONFIG, OSD.msp.encodeOther())
                             .then(function() {
                                 updateOsdView();
@@ -2868,6 +2970,11 @@ TABS.osd.initialize = function(callback) {
                     const $displayFields = $('#element-fields').empty();
                     let enabledCount = 0;
                     for (const field of OSD.data.displayItems) {
+                        // Skipping not DJI OSD elements
+                        if (OSD.data.dji_mode == 1 && !field.dji) {
+                            continue;
+                        }
+
                         // versioning related, if the field doesn't exist at the current flight controller version, just skip it
                         if (!field.name) {
                             continue;
@@ -2886,7 +2993,8 @@ TABS.osd.initialize = function(callback) {
                             $field[0].classList.add('osd_tip');
                             $field.attr('title', desc);
                         }
-                        for (let osd_profile = 0; osd_profile < OSD.getNumberOfProfiles(); osd_profile++) {
+
+                            for (let osd_profile = 0; osd_profile < OSD.getNumberOfProfiles(); osd_profile++) {
                             $field.append(
                                     $(`<input type="checkbox" name="${field.name}"></input>`)
                                         .data('field', field)
