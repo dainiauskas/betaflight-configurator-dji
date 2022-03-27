@@ -65,6 +65,7 @@
     "lru_map": "^0.3.3",
     "marked": "^0.8.0",
     "multiple-select": "^1.5.2",
+    "node": "14.19.0",
     "nw-vue-devtools-prebuilt": "^0.0.10",
     "object-hash": "^2.0.3",
     "select2": "^4.0.13",
